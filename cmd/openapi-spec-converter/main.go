@@ -666,13 +666,13 @@ func copyDescriptionToSummary(operation *openapi2.Operation) {
 	if grpcClientName != "" || methodName != "" {
 		var parts []string
 		if grpcClientName != "" {
-			parts = append(parts, fmt.Sprintf("gRPC客户端名称：%s", grpcClientName))
+			parts = append(parts, fmt.Sprintf("<p><strong>gRPC客户端名称</strong>：%s</p>", grpcClientName))
 		}
 		if methodName != "" {
-			parts = append(parts, fmt.Sprintf("接口方法名称：%s", methodName))
+			parts = append(parts, fmt.Sprintf("<p><strong>接口方法名称</strong>：%s</p>", methodName))
 		}
 		if len(parts) > 0 {
-			grpcInfo = "" + strings.Join(parts, "\n")
+			grpcInfo = "" + strings.Join(parts, "\n\n")
 		}
 	}
 
@@ -688,7 +688,7 @@ func copyDescriptionToSummary(operation *openapi2.Operation) {
 	// 在 description 后面追加 gRPC 信息
 	if grpcInfo != "" {
 		if operation.Description != "" {
-			operation.Description = grpcInfo + "\n" + operation.Description
+			operation.Description = grpcInfo + "\n\n<p>" + operation.Description + "</p>"
 		} else {
 			operation.Description = strings.TrimPrefix(grpcInfo, "\n\n")
 		}
